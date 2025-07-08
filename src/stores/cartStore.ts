@@ -1,90 +1,75 @@
 import { create } from 'zustand';
 import type { CartItem, CartState } from '../types';
 
-// Create the Zustand store
+const loadCartItems = (): CartItem[] => {
+  if (typeof window !== 'undefined') {
+    try {
+      const stored = localStorage.getItem('cartItems');
+      return stored ? JSON.parse(stored) : [];
+    } catch (e) {
+      console.error('Failed to parse cart items:', e);
+      return [];
+    }
+  }
+  return [];
+};
+
+const saveCartItems = (items: CartItem[]) => {
+  if (typeof window !== 'undefined') {
+    localStorage.setItem('cartItems', JSON.stringify(items));
+  }
+};
+
 export const useCartStore = create<CartState>((set, get) => ({
   isCartOpen: false,
-  cartItems: [
-    // Initial dummy cart items (can be empty or pre-filled for testing)
-    // Note: IDs now reflect the new generalized format
-    // {
-    //   id: 'jacket-canada-goosee-Size-S-Color-#333333',
-    //   productId: 'jacket-canada-goosee',
-    //   name: 'Jacket',
-    //   price: 518.47,
-    //   imageUrl: 'https://images.canadagoose.com/image/upload/w_480,c_scale,f_auto,q_auto:best/v1576016105/product-image/2409L_61.jpg',
-    //   quantity: 1,
-    //   selectedAttributes: {
-    //     'Size': 'S',
-    //     'Color': '#333333'
-    //   },
-    //   attributes: [ // Dummy attributes for initial item
-    //     {id: 'Size', name: 'Size', type: 'text', items: [{id: 5, displayValue: 'Small', value: 'S'}, {id: 6, displayValue: 'Medium', value: 'M'}]},
-    //     {id: 'Color', name: 'Color', type: 'swatch', items: [{id: 1, displayValue: 'Black', value: '#000000'}, {id: 2, displayValue: 'Gray', value: '#333333'}]}
-    //   ]
-    // },
-    // {
-    //   id: 'running-short-Size-M-Color-#008000',
-    //   productId: 'running-short',
-    //   name: 'Running Short',
-    //   price: 50.00,
-    //   imageUrl: 'https://placehold.co/100x100/e0e0e0/333333?text=Short',
-    //   quantity: 2,
-    //   selectedAttributes: {
-    //     'Size': 'M',
-    //     'Color': '#008000'
-    //   },
-    //   attributes: [ // Dummy attributes for initial item
-    //     {id: 'Size', name: 'Size', type: 'text', items: [{id: 1, displayValue: 'Small', value: 'S'}, {id: 2, displayValue: 'Medium', value: 'M'}]},
-    //     {id: 'Color', name: 'Color', type: 'swatch', items: [{id: 3, displayValue: 'Green', value: '#008000'}, {id: 4, displayValue: 'Red', value: '#FF0000'}]}
-    //   ]
-    // }
-  ],
+  cartItems: loadCartItems(),
 
   toggleCart: () => set((state) => ({ isCartOpen: !state.isCartOpen })),
 
-  // addToCart now takes selectedAttributes object
   addToCart: (product, selectedAttributes) => {
     set((state) => {
-      // Create a unique ID for the cart item based on product ID and ALL selected attributes
       const attributeString = Object.keys(selectedAttributes)
-        .sort() // Sort keys for consistent ID generation
+        .sort()
         .map(key => `${key}-${selectedAttributes[key]}`)
         .join('-');
       const uniqueItemId = `${product.id}-${attributeString}`;
 
       const existingItemIndex = state.cartItems.findIndex(item => item.id === uniqueItemId);
 
+      let updatedItems;
       if (existingItemIndex > -1) {
-        // If item already exists, update its quantity
-        const updatedItems = [...state.cartItems];
+        updatedItems = [...state.cartItems];
         updatedItems[existingItemIndex].quantity += 1;
-        return { cartItems: updatedItems };
       } else {
-        // If item is new, add it to the cart
         const newItem: CartItem = {
           id: uniqueItemId,
-          productId: product.id, // Store original product ID
+          productId: product.id,
           name: product.name,
-          price: product.prices[0]?.amount || 0, // Use the first price amount
-          imageUrl: product.gallery[0]?.imageUrl || 'https://placehold.co/100x100/e0e0e0/333333?text=No+Image', // Use first gallery image
+          price: product.prices[0]?.amount || 0,
+          imageUrl: product.gallery[0]?.imageUrl,
           quantity: 1,
-          selectedAttributes: selectedAttributes, // Store the generalized attributes
-          attributes: product.attributes, // Store the full attribute definitions
+          selectedAttributes: selectedAttributes,
+          attributes: product.attributes,
         };
-        return { cartItems: [...state.cartItems, newItem] };
+        updatedItems = [...state.cartItems, newItem];
       }
+
+      saveCartItems(updatedItems);
+      return { cartItems: updatedItems };
     });
   },
 
   updateQuantity: (id, delta) => {
-    set((state) => ({
-      cartItems: state.cartItems
-        .map((item) =>
+    set((state) => {
+      const updatedItems = state.cartItems
+        .map(item =>
           item.id === id ? { ...item, quantity: item.quantity + delta } : item
         )
-        .filter((item) => item.quantity > 0),
-    }));
+        .filter(item => item.quantity > 0);
+
+      saveCartItems(updatedItems);
+      return { cartItems: updatedItems };
+    });
   },
 
   calculateTotal: () => {
