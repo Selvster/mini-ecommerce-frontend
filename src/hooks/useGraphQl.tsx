@@ -7,6 +7,8 @@ import { PLACE_ORDER_MUTATION } from '../graphql/mutations';
 import type {
   Category,
   Product,
+  PlaceOrderInput,
+  PlaceOrderResult,
 } from '../types'; 
 
 
@@ -93,13 +95,13 @@ export function useProduct(
 // /**
 //  * Hook to place a new order.
 //  */
-// export function usePlaceOrder(
-//   options?: UseMutationOptions<PlaceOrderResult, Error, PlaceOrderInput>
-// ) {
-//   return useMutation<PlaceOrderResult, Error, PlaceOrderInput>({
-//     mutationFn: async (input: PlaceOrderInput) => {
-//       return rawGraphqlRequest<PlaceOrderResult>(PLACE_ORDER_MUTATION, { input });
-//     },
-//     ...options,
-//   });
-// }
+export function usePlaceOrder(
+  options?: UseMutationOptions<PlaceOrderResult, Error, PlaceOrderInput>
+) {
+  return useMutation<PlaceOrderResult, Error, PlaceOrderInput>({
+    mutationFn: async (input: PlaceOrderInput) => {
+      return rawGraphqlRequest<PlaceOrderResult>(PLACE_ORDER_MUTATION, { input });
+    },
+    ...options,
+  });
+}

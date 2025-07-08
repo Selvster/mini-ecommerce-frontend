@@ -1,11 +1,37 @@
 
 import { useCartStore } from '../stores/cartStore';
+import { usePlaceOrder } from '../hooks/useGraphQl';
 export default function CartOverlay() {
   const isOpen = useCartStore((state) => state.isCartOpen);
   const toggleCart = useCartStore((state) => state.toggleCart);
   const cartItems = useCartStore((state) => state.cartItems);
   const updateQuantity = useCartStore((state) => state.updateQuantity);
   const calculateTotal = useCartStore((state) => state.calculateTotal);
+
+  const { mutate: placeOrder } = usePlaceOrder({
+    onSuccess: (_data) => {
+     // Handle successful 
+    },
+    onError: (_error) => {
+     // Handle error
+    },
+  });
+
+  const handlePlaceOrder = () => {
+
+    if (cartItems.length === 0) {
+      console.warn('Cart is empty. Cannot place order.');
+      return;
+    }
+    const orderItems = cartItems.map(item => ({
+      productId: item.productId,
+      quantity: item.quantity,
+      selectedAttributes: Object.entries(item.selectedAttributes).map(([name, value]) => ({ name, value }))
+    }));
+
+    placeOrder({ items: orderItems });
+    toggleCart();
+  };
 
   return (
     <div
@@ -71,7 +97,7 @@ export default function CartOverlay() {
                     </div>
                   ))}
 
-        
+
                 </div>
 
                 <div className="flex flex-col items-center justify-between ml-4">
@@ -106,7 +132,13 @@ export default function CartOverlay() {
             <span className=''>Total</span>
             <span>${calculateTotal()}</span>
           </div>
-          <button className="cursor-pointer w-full bg-green-500 text-white py-3 rounded-md font-semibold hover:bg-green-600 transition-colors ">
+          <button
+            onClick={
+              () => {
+                handlePlaceOrder();
+              }
+            }
+            className="cursor-pointer w-full bg-green-500 text-white py-3 rounded-md font-semibold hover:bg-green-600 transition-colors ">
             PLACE ORDER
           </button>
         </div>
