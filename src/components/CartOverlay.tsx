@@ -42,7 +42,7 @@ export default function CartOverlay() {
     >
       <div className="p-6">
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-xl font-bold text-gray-800 ">My Bag, {cartItems.length} items</h2>
+          <h2 className="text-xl font-bold">My Bag, {cartItems.length} items</h2>
           <button onClick={toggleCart} className="text-gray-500 hover:text-gray-700 cursor-pointer">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-x">
               <path d="M18 6 6 18" /><path d="m6 6 12 12" />
@@ -64,7 +64,7 @@ export default function CartOverlay() {
 
                   {item.attributes.map((attr) => (
                     <div key={attr.id} className="mt-2">
-                      <span className="text-sm text-gray-500 block mb-1">
+                      <span className="text-sm block mb-1">
                         {attr.name}:
                       </span>
 
@@ -74,7 +74,7 @@ export default function CartOverlay() {
                             <span
                               key={textItem.id}
                               className={`w-auto p-2 h-8 flex items-center justify-center text-xs font-medium border border-gray-300 rounded-md
-              ${item.selectedAttributes[attr.name] === textItem.value ? 'bg-gray-800 text-white' : 'bg-white text-gray-700'}`
+              ${item.selectedAttributes[attr.name] === textItem.value ? 'bg-dark text-white' : 'bg-white'}`
                               }
                             >
                               {textItem.displayValue}
@@ -89,7 +89,7 @@ export default function CartOverlay() {
                             <span
                               key={swatchItem.id}
                               className={`w-6 h-6 rounded-full border border-gray-300
-              ${item.selectedAttributes[attr.name] === swatchItem.value ? 'ring-2 ring-green-500 ring-offset-1' : ''}`
+              ${item.selectedAttributes[attr.name] === swatchItem.value ? 'ring-2 ring-primary ring-offset-1' : ''}`
                               }
                               style={{ backgroundColor: swatchItem.value }}
                             ></span>
@@ -105,14 +105,14 @@ export default function CartOverlay() {
                 <div className="flex flex-col items-center justify-between ml-4">
                   <button
                     onClick={() => updateQuantity(item.id, 1)}
-                    className="cursor-pointer w-8 h-8 flex items-center justify-center rounded-full border border-gray-300 text-gray-600 hover:bg-gray-100"
+                    className="cursor-pointer w-8 h-8 flex items-center justify-center rounded-full border border-gray-300  hover:bg-gray-100"
                   >
                     +
                   </button>
                   <span className="my-2 text-lg font-medium">{item.quantity}</span>
                   <button
                     onClick={() => updateQuantity(item.id, -1)}
-                    className="cursor-pointer w-8 h-8 flex items-center justify-center rounded-full border border-gray-300 text-gray-600 hover:bg-gray-100"
+                    className="cursor-pointer w-8 h-8 flex items-center justify-center rounded-full border border-gray-300  hover:bg-gray-100"
                   >
                     -
                   </button>
@@ -143,7 +143,7 @@ export default function CartOverlay() {
             className={`w-full text-white py-3 rounded-md font-semibold transition-colors
               ${cartItems.length === 0
                 ? 'bg-gray-400 cursor-not-allowed'
-                : 'bg-green-500 hover:bg-green-600 cursor-pointer'
+                : 'bg-primary hover:bg-primary-hover cursor-pointer'
               }`
             }
             disabled={cartItems.length === 0}

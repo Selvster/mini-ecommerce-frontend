@@ -88,7 +88,7 @@ export default function ProductPage() {
                                                     key={item.id}
                                                     onClick={() => handleAttributeSelect(attribute.name, item.value)}
                                                     className={`w-8 h-8 rounded-full border border-gray-300 cursor-pointer
-                ${isSelected ? 'ring-2 ring-green-500 ring-offset-2' : ''}`}
+                ${isSelected ? 'ring-2 ring-primary ring-offset-2' : ''}`}
                                                     style={{ backgroundColor: item.value }}
                                                     title={item.displayValue}
                                                 ></button>
@@ -99,7 +99,7 @@ export default function ProductPage() {
                                                     key={item.id}
                                                     onClick={() => handleAttributeSelect(attribute.name, item.value)}
                                                     className={`px-4 py-2 text-sm font-medium border rounded-md cursor-pointer
-                ${isSelected ? 'bg-gray-800 text-white' : 'bg-white text-gray-700 hover:bg-gray-100'}`}
+                ${isSelected ? 'bg-dark text-white' : 'bg-white text-gray-700 hover:bg-gray-100'}`}
                                                 >
                                                     {item.value}
                                                 </button>
@@ -111,14 +111,13 @@ export default function ProductPage() {
                         ))}
 
 
-                        <p className="text-2xl font-bold text-gray-900 mb-6">{product.prices[0].currency.symbol}{product.prices[0].amount}</p>
+                        <p className="text-2xl font-bold mb-6">{product.prices[0].currency.symbol}{product.prices[0].amount}</p>
 
                         <button
-                            // className="w-full bg-green-500 text-white py-3 rounded-md font-semibold text-lg hover:bg-green-600 transition-colors duration-200 cursor-pointer"
                             onClick={handleAddToCart}
                             disabled={!product.inStock}
                             //handle if not in stock classname
-                            className={`w-full bg-green-500 text-white py-3 rounded-md font-semibold text-lg hover:bg-green-600 transition-colors duration-200 cursor-pointer
+                            className={`w-full bg-primary text-white py-3 rounded-md font-semibold text-lg hover:bg-primary-hover transition-colors duration-200 cursor-pointer
                             ${!product.inStock ? 'opacity-50 cursor-not-allowed' : ''}`}
                         >
                             {!product.inStock ? 'OUT OF STOCK' : 'ADD TO CART'}

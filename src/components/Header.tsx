@@ -26,7 +26,7 @@ export default function Header({ categoryName }: HeaderProps) {
                 {categories.map((category) => (
                     <Link to={`/category/${category.name}`}
                         key={category.name}
-                        className={"text-gray-700 hover:text-green-500 pb-2 " + (categoryName === category.name ? " text-green-500 border-b-2 border-green-500" : "")}
+                        className={"text-gray-700 hover:text-primary-hover pb-2 " + (categoryName === category.name ? " text-primary border-b-2 border-primary" : "")}
                     >
                         {category.name.toUpperCase()}
                     </Link>

@@ -32,7 +32,7 @@ export default function ProductImages({ product }: { product: Product }) {
             key={index}
             src={item.imageUrl}
             alt={`${product.name} thumbnail ${index + 1}`}
-            className={`w-20 h-20 object-cover rounded-md cursor-pointer border-2 ${currentImageIndex === index ? 'border-green-500' : 'border-transparent'}`}
+            className={`w-20 h-20 object-cover rounded-md cursor-pointer border-2 ${currentImageIndex === index ? 'border-primary' : 'border-transparent'}`}
             onClick={() => setCurrentImageIndex(index)}
           />
         ))}
@@ -48,7 +48,7 @@ export default function ProductImages({ product }: { product: Product }) {
 
           <button
             onClick={goToPreviousImage}
-            className="absolute left-2 top-1/2 -translate-y-1/2 bg-black p-2 text-white hover:bg-neutral-800 focus:outline-none"
+            className="cursor-pointer absolute left-2 top-1/2 -translate-y-1/2 bg-dark p-2 text-white hover:bg-neutral-800 focus:outline-none"
             aria-label="Previous image"
           >
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-chevron-left">
@@ -58,7 +58,7 @@ export default function ProductImages({ product }: { product: Product }) {
 
           <button
             onClick={goToNextImage}
-            className="absolute right-2 top-1/2 -translate-y-1/2 bg-black p-2 shadow-md text-white hover:bg-neutral-800 focus:outline-none"
+            className="cursor-pointer absolute right-2 top-1/2 -translate-y-1/2 bg-dark p-2 shadow-md text-white hover:bg-neutral-800 focus:outline-none"
             aria-label="Next image"
           >
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-chevron-right">

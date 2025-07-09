@@ -1,17 +1,17 @@
-import  { useState } from 'react';
+import { useState } from 'react';
 import type { ProductCardProps } from '../types';
 import { useNavigate } from 'react-router-dom';
 import { useCartStore } from '../stores/cartStore';
-import { showToastAlert} from '../utils';
+import { showToastAlert } from '../utils';
 
-const ProductCard = ({ product } : ProductCardProps) => {
-    const addToCart = useCartStore((state) => state.addToCart);
+const ProductCard = ({ product }: ProductCardProps) => {
+  const addToCart = useCartStore((state) => state.addToCart);
   const [isHovered, setIsHovered] = useState(false);
   const navigate = useNavigate();
 
   return (
     <div
-      className="relative bg-white p-2 shadow-md rounded-md overflow-hidden cursor-pointer"
+      className={`relative bg-white p-2 rounded-md overflow-hidden cursor-pointer ${isHovered ? 'shadow-md' : ''}`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onClick={() => {
@@ -33,32 +33,32 @@ const ProductCard = ({ product } : ProductCardProps) => {
       </div>
 
       <div className="mt-2 pl-2 p-3">
-        <p className="text-base text-gray-700 font-normal ">{product.name}</p>
-        <p className="text-base font-semibold text-gray-900 ">{product.prices[0].currency.symbol}{product.prices[0].amount}</p>
+        <p className="text-base  font-normal ">{product.name}</p>
+        <p className="text-base font-semibold ">{product.prices[0].currency.symbol}{product.prices[0].amount}</p>
       </div>
 
       {product.inStock && (
         <button
           onClick={
             (e) => {
-              e.stopPropagation(); 
+              e.stopPropagation();
               const attributes = product.attributes;
 
               const selectedAttributes = attributes.reduce<Record<string, string>>((acc, attr) => {
-                acc[attr.name] = attr.items[0].value; 
+                acc[attr.name] = attr.items[0].value;
                 return acc;
               }, {});
-              
-              addToCart(product,selectedAttributes)
+
+              addToCart(product, selectedAttributes)
               showToastAlert('success', 'Done !', 'Product added to cart successfully!');
             }
           }
-          className={`cursor-pointer absolute bottom-16 right-4 bg-green-500 text-white rounded-full w-10 h-10 flex items-center justify-center shadow-lg hover:bg-green-600 transition-all duration-300 ease-in-out
+          className={`cursor-pointer absolute bottom-16 right-4 bg-primary text-white rounded-full w-10 h-10 flex items-center justify-center shadow-lg hover:bg-primary-hover transition-all duration-300 ease-in-out
             ${isHovered ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}`
           }
         >
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-shopping-cart">
-            <circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/>
+            <circle cx="8" cy="21" r="1" /><circle cx="19" cy="21" r="1" /><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12" />
           </svg>
         </button>
       )}

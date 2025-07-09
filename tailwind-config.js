@@ -4,7 +4,7 @@ export default {
     extend: {
         fontFamily: {
             raleway: ["Raleway", "sans-serif"],
-        }
+        },
     },
   },
   plugins: ["@tailwindcss/postcss"],
