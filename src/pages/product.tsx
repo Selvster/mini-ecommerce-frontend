@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import ProductImages from '../components/ProductImages';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useProduct } from '../hooks/useGraphQl';
@@ -25,19 +25,6 @@ export default function ProductPage() {
 
 
     const [selectedAttributes, setSelectedAttributes] = useState<{ [attrName: string]: string }>({});
-    useEffect(() => {
-        if (!product) return;
-        const defaults: { [attrName: string]: string } = {};
-
-        product.attributes.forEach(attr => {
-            const firstItem = attr.items[0];
-            if (firstItem) {
-                defaults[attr.name] = firstItem.value;
-            }
-        });
-
-        setSelectedAttributes(defaults);
-    }, [product]);
 
     const handleAttributeSelect = (attrName: string, value: string) => {
         setSelectedAttributes(prev => ({ ...prev, [attrName]: value }));
@@ -77,7 +64,7 @@ export default function ProductPage() {
                         <h1 className="text-3xl font-bold text-gray-900 mb-4">{product.name}</h1>
 
                         {product.attributes.map(attribute => (
-                            <div key={attribute.id} className="mb-6" 
+                            <div key={attribute.id} className="mb-6"
                                 data-testid={`product-attribute-${attribute.name.toLowerCase().replace(/\s+/g, '-')}`}
                             >
                                 <span className="text-sm text-gray-500 block mb-2 font-semibold">{attribute.name.toUpperCase()}:</span>
@@ -119,9 +106,12 @@ export default function ProductPage() {
 
                         <button
                             onClick={handleAddToCart}
-                            disabled={!product.inStock}
-                            className={`w-full bg-primary text-white py-3 rounded-md font-semibold text-lg hover:bg-primary-hover transition-colors duration-200 cursor-pointer
-                            ${!product.inStock ? 'opacity-50 cursor-not-allowed' : ''}`}
+                            disabled={!product.inStock ||
+                                Object.keys(selectedAttributes).length < product.attributes.length}
+                            className={`w-full  text-white py-3 rounded-md font-semibold text-lg  transition-colors duration-200
+                            ${!product.inStock ||
+                                    Object.keys(selectedAttributes).length < product.attributes.length
+                                    ? 'opacity-50 cursor-not-allowed bg-gray-700' : ' cursor-pointer bg-primary hover:bg-primary-hover'}`}
                             data-testid='add-to-cart'
                         >
                             {!product.inStock ? 'OUT OF STOCK' : 'ADD TO CART'}
