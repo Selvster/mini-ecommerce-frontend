@@ -77,7 +77,9 @@ export default function ProductPage() {
                         <h1 className="text-3xl font-bold text-gray-900 mb-4">{product.name}</h1>
 
                         {product.attributes.map(attribute => (
-                            <div key={attribute.id} className="mb-6">
+                            <div key={attribute.id} className="mb-6" 
+                                data-testid={`product-attribute-${attribute.name.toLowerCase().replace(/\s+/g, '-')}`}
+                            >
                                 <span className="text-sm text-gray-500 block mb-2 font-semibold">{attribute.name.toUpperCase()}:</span>
 
                                 <div className="flex gap-2">
@@ -118,14 +120,14 @@ export default function ProductPage() {
                         <button
                             onClick={handleAddToCart}
                             disabled={!product.inStock}
-                            //handle if not in stock classname
                             className={`w-full bg-primary text-white py-3 rounded-md font-semibold text-lg hover:bg-primary-hover transition-colors duration-200 cursor-pointer
                             ${!product.inStock ? 'opacity-50 cursor-not-allowed' : ''}`}
+                            data-testid='add-to-cart'
                         >
                             {!product.inStock ? 'OUT OF STOCK' : 'ADD TO CART'}
                         </button>
                         {sanitizedDescription && (
-                            <div className="text-gray-700 leading-relaxed mb-6 mt-2">
+                            <div className="text-gray-700 leading-relaxed mb-6 mt-2" data-testid='product-description'>
                                 {parse(sanitizedDescription)}
                             </div>
                         )}

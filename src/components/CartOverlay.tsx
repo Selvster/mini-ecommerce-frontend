@@ -35,6 +35,10 @@ export default function CartOverlay() {
     placeOrder({ items: orderItems });
   };
 
+  const toKebabCase = (str: string) => {
+    return str.toLowerCase().replace(/\s+/g, '-');
+  };
+
   return (
     <div
       className={` top-18  h-auto w-100 bg-white shadow-lg z-50 transform transition-transform duration-300 ease-in-out ${isOpen ? 'translate-x-0 right-5 absolute' : 'translate-x-full right-0 hidden'
@@ -42,7 +46,7 @@ export default function CartOverlay() {
     >
       <div className="p-6">
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-xl font-bold">My Bag, {cartItems.length} items</h2>
+          <h2 className="text-xl font-bold">My Bag, <span data-testid="cart-total">{cartItems.length}</span>  items</h2>
           <button onClick={toggleCart} className="text-gray-500 hover:text-gray-700 cursor-pointer">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-x">
               <path d="M18 6 6 18" /><path d="m6 6 12 12" />
@@ -63,7 +67,7 @@ export default function CartOverlay() {
                   <p className="text-gray-600 ">${item.price.toFixed(2)}</p>
 
                   {item.attributes.map((attr) => (
-                    <div key={attr.id} className="mt-2">
+                    <div key={attr.id} className="mt-2" data-testid={`cart-item-attribute-${toKebabCase(attr.name)}`}>
                       <span className="text-sm block mb-1">
                         {attr.name}:
                       </span>
@@ -73,6 +77,7 @@ export default function CartOverlay() {
                           {attr.items.map((textItem) => (
                             <span
                               key={textItem.id}
+                              data-testid={`cart-item-attribute-${toKebabCase(attr.name)}-${toKebabCase(textItem.value)}${item.selectedAttributes[attr.name] === textItem.value ? '-selected' : ''}`}
                               className={`w-auto p-2 h-8 flex items-center justify-center text-xs font-medium border border-gray-300 rounded-md
               ${item.selectedAttributes[attr.name] === textItem.value ? 'bg-dark text-white' : 'bg-white'}`
                               }
@@ -106,13 +111,15 @@ export default function CartOverlay() {
                   <button
                     onClick={() => updateQuantity(item.id, 1)}
                     className="cursor-pointer w-8 h-8 flex items-center justify-center rounded-full border border-gray-300  hover:bg-gray-100"
+                    data-testid='cart-item-amount-increase'
                   >
                     +
                   </button>
-                  <span className="my-2 text-lg font-medium">{item.quantity}</span>
+                  <span className="my-2 text-lg font-medium" data-testid="cart-item-amount">{item.quantity}</span>
                   <button
                     onClick={() => updateQuantity(item.id, -1)}
                     className="cursor-pointer w-8 h-8 flex items-center justify-center rounded-full border border-gray-300  hover:bg-gray-100"
+                    data-testid='cart-item-amount-decrease'
                   >
                     -
                   </button>

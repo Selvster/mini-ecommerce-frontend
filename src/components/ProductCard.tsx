@@ -12,6 +12,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
   return (
     <div
       className={`relative bg-white p-2 rounded-md overflow-hidden cursor-pointer ${isHovered ? 'shadow-md' : ''}`}
+      data-testid={`product-${product.name.replace(/\s+/g, '-').toLowerCase()}`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onClick={() => {
