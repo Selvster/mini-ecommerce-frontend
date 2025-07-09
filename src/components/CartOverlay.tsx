@@ -82,7 +82,7 @@ export default function CartOverlay() {
               ${item.selectedAttributes[attr.name] === textItem.value ? 'bg-dark text-white' : 'bg-white'}`
                               }
                             >
-                              {textItem.displayValue}
+                              {textItem.value}
                             </span>
                           ))}
                         </div>
