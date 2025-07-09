@@ -76,4 +76,6 @@ export const useCartStore = create<CartState>((set, get) => ({
     const total = get().cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
     return total.toFixed(2);
   },
+
+  reset : () => set(() => ({ cartItems: [], isCartOpen: false}))
 }));

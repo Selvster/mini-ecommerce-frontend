@@ -34,4 +34,5 @@ export interface CartState {
   addToCart: (product: ProductForCart, selectedAttributes: { [attributeId: string]: string }) => void;
   updateQuantity: (id: string, delta: number) => void;
   calculateTotal: () => string;
+  reset: () => void;
 }

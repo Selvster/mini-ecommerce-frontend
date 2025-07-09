@@ -1,19 +1,22 @@
 
 import { useCartStore } from '../stores/cartStore';
 import { usePlaceOrder } from '../hooks/useGraphQl';
+import { showToastAlert } from '../utils';
 export default function CartOverlay() {
   const isOpen = useCartStore((state) => state.isCartOpen);
   const toggleCart = useCartStore((state) => state.toggleCart);
   const cartItems = useCartStore((state) => state.cartItems);
   const updateQuantity = useCartStore((state) => state.updateQuantity);
   const calculateTotal = useCartStore((state) => state.calculateTotal);
+  const resetCart = useCartStore((state) => state.reset);
 
   const { mutate: placeOrder } = usePlaceOrder({
     onSuccess: (_data) => {
-     // Handle successful 
+      showToastAlert('success', 'Order Placed', 'Your order has been placed successfully!');
+      resetCart();
     },
     onError: (_error) => {
-     // Handle error
+      // Handle error
     },
   });
 
@@ -30,7 +33,6 @@ export default function CartOverlay() {
     }));
 
     placeOrder({ items: orderItems });
-    toggleCart();
   };
 
   return (

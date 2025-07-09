@@ -2,6 +2,7 @@ import  { useState } from 'react';
 import type { ProductCardProps } from '../types';
 import { useNavigate } from 'react-router-dom';
 import { useCartStore } from '../stores/cartStore';
+import { showToastAlert} from '../utils';
 
 const ProductCard = ({ product } : ProductCardProps) => {
     const addToCart = useCartStore((state) => state.addToCart);
@@ -49,6 +50,7 @@ const ProductCard = ({ product } : ProductCardProps) => {
               }, {});
               
               addToCart(product,selectedAttributes)
+              showToastAlert('success', 'Done !', 'Product added to cart successfully!');
             }
           }
           className={`cursor-pointer absolute bottom-16 right-4 bg-green-500 text-white rounded-full w-10 h-10 flex items-center justify-center shadow-lg hover:bg-green-600 transition-all duration-300 ease-in-out
