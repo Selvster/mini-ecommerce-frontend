@@ -15,8 +15,6 @@ export const ALL_PRODUCTS_QUERY = `
             id
             name
             inStock
-            brand
-            description
             category {
               id
               name
@@ -52,12 +50,7 @@ export const PRODUCT_BY_ID_QUERY = `
       id
       name
       inStock
-      brand
       description
-      category {
-        id
-        name
-      }
       gallery {
         imageUrl
       }

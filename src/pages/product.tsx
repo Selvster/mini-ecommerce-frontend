@@ -3,6 +3,9 @@ import ProductImages from '../components/ProductImages';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useProduct } from '../hooks/useGraphQl';
 import { useCartStore } from '../stores/cartStore';
+import DOMPurify from 'dompurify';
+import parse from 'html-react-parser';
+
 
 export default function ProductPage() {
     const navigate = useNavigate();
@@ -13,6 +16,8 @@ export default function ProductPage() {
     }
     const { data, isLoading, isError, error } = useProduct(productId);
     const product = data?.product;
+
+    const sanitizedDescription = product?.description ? DOMPurify.sanitize(product.description) : null;
 
 
 
@@ -105,15 +110,17 @@ export default function ProductPage() {
                         <button
                             className="w-full bg-green-500 text-white py-3 rounded-md font-semibold text-lg hover:bg-green-600 transition-colors duration-200 cursor-pointer"
                             onClick={handleAddToCart}
-                            disabled={!product.inStock} // Disable if out of stock
+                            disabled={!product.inStock}
                         >
                             {!product.inStock ? 'OUT OF STOCK' : 'ADD TO CART'}
                         </button>
                     </div>
 
-                    <div className="mt-8 pt-4 border-t border-gray-200">
-                        <p className="text-gray-700 leading-relaxed">{product.description}</p>
-                    </div>
+                    {sanitizedDescription && (
+                        <div className="text-gray-700 leading-relaxed mb-6">
+                            {parse(sanitizedDescription)}
+                        </div>
+                    )}
                 </div>
             </div>
 
