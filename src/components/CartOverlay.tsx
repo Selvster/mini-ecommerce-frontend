@@ -15,8 +15,8 @@ export default function CartOverlay() {
       showToastAlert('success', 'Order Placed', 'Your order has been placed successfully!');
       resetCart();
     },
-    onError: (_error) => {
-      // Handle error
+    onError: (error) => {
+      showToastAlert('error', 'Order Failed', error?.message || 'Failed to place order. Please try again later.');
     },
   });
 
