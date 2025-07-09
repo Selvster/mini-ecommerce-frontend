@@ -7,6 +7,7 @@ import DOMPurify from 'dompurify';
 import parse from 'html-react-parser';
 import LoadingIndicator from '../components/LoadingIndicator';
 import Error from '../components/Error';
+import { showToastAlert } from '../utils';
 
 
 export default function ProductPage() {
@@ -46,6 +47,7 @@ export default function ProductPage() {
     const handleAddToCart = () => {
         if (!product) return;
         addToCart(product, selectedAttributes);
+        showToastAlert('success', 'Done !', 'Product added to cart successfully!');
     };
 
 
