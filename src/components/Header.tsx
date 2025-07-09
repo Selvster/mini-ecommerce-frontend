@@ -4,16 +4,12 @@ import type { HeaderProps } from '../types';
 import { useCategories } from '../hooks/useGraphQl';
 import { Link } from 'react-router-dom';
 import { useCartStore } from '../stores/cartStore';
+import Error from './Error';
 export default function Header({ categoryName, setDefaultCategory }: HeaderProps) {
     const toggleCart = useCartStore((state) => state.toggleCart);
     const cartItemCount = useCartStore((state) => state.cartItems.length);
 
     const { data: categoriesData, isLoading, isError, error } = useCategories();
-
-
-    if (isError) {
-        return <div className="text-center py-4 text-xl text-red-500 ">Error: {error?.message || 'Failed to load categories.'}</div>;
-    }
     const categories = categoriesData?.categories || [];
 
     if (categories.length > 0) {
@@ -25,6 +21,11 @@ export default function Header({ categoryName, setDefaultCategory }: HeaderProps
                 {
                     isLoading && (
                         <div className="text-gray-500">Loading categories...</div>
+                    )
+                }
+                {
+                    isError && (
+                        <Error message={error?.message || 'Failed to load categories.'}/>
                     )
                 }
                 {categories.map((category) => (
