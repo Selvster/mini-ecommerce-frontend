@@ -26,7 +26,7 @@ export default function ProductImages({ product }: { product: Product }) {
 
   return (
     <div className="flex flex-col md:flex-row gap-4 w-full md:w-1/2" data-testid="product-gallery">
-      <div className="flex md:flex-col gap-2 overflow-x-auto md:overflow-y-auto pb-2 md:pb-0">
+      <div className="flex md:flex-col gap-2 overflow-x-auto md:overflow-y-auto pb-2 md:pb-0 max-h-[50vh] pr-0.5">
         {product.gallery.map((item, index: number) => (
           <img
             key={index}

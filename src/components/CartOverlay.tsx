@@ -41,7 +41,7 @@ export default function CartOverlay() {
 
   return (
     <div
-      className={` top-18  h-auto w-100 bg-white shadow-lg z-50 transform transition-transform duration-300 ease-in-out ${isOpen ? 'translate-x-0 right-5 absolute' : 'translate-x-full right-0 hidden'
+      className={` top-1  h-auto w-100 bg-white shadow-lg z-50 transform transition-transform duration-300 ease-in-out ${isOpen ? 'translate-x-0 right-5 absolute' : 'translate-x-full right-0 hidden'
         }`}
     >
       <div className="p-6">

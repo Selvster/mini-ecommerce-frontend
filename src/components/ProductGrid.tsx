@@ -2,12 +2,10 @@ import ProductCard from './ProductCard';
 
 import type { ProductGridProps } from '../types';
 import { useProducts } from '../hooks/useGraphQl';
-import { useCartStore } from '../stores/cartStore';
 import LoadingIndicator from './LoadingIndicator';
 import Error from './Error';
 
 export default function ProductGrid({ currentCategory }: ProductGridProps) {
-  const isCartOpen = useCartStore((state) => state.isCartOpen);
   const { data: productsData, isLoading, isError, error, isFetching } = useProducts(currentCategory);
   let products = productsData?.products || [];
 
@@ -40,9 +38,7 @@ export default function ProductGrid({ currentCategory }: ProductGridProps) {
         ))}
       </div>
 
-      {isCartOpen && (
-        <div className="absolute inset-0 bg-black/20 z-40 transition-opacity duration-300"></div>
-      )}
+ 
     </div>
   );
 }
