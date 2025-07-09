@@ -58,7 +58,7 @@ export default function ProductPage() {
     if (isError || !product) {
         return (
             <>
-                <Error 
+                <Error
                     message={error?.message || 'Failed to load product details.'}
                 />
             </>
@@ -114,19 +114,23 @@ export default function ProductPage() {
                         <p className="text-2xl font-bold text-gray-900 mb-6">{product.prices[0].currency.symbol}{product.prices[0].amount}</p>
 
                         <button
-                            className="w-full bg-green-500 text-white py-3 rounded-md font-semibold text-lg hover:bg-green-600 transition-colors duration-200 cursor-pointer"
+                            // className="w-full bg-green-500 text-white py-3 rounded-md font-semibold text-lg hover:bg-green-600 transition-colors duration-200 cursor-pointer"
                             onClick={handleAddToCart}
                             disabled={!product.inStock}
+                            //handle if not in stock classname
+                            className={`w-full bg-green-500 text-white py-3 rounded-md font-semibold text-lg hover:bg-green-600 transition-colors duration-200 cursor-pointer
+                            ${!product.inStock ? 'opacity-50 cursor-not-allowed' : ''}`}
                         >
                             {!product.inStock ? 'OUT OF STOCK' : 'ADD TO CART'}
                         </button>
+                        {sanitizedDescription && (
+                            <div className="text-gray-700 leading-relaxed mb-6 mt-2">
+                                {parse(sanitizedDescription)}
+                            </div>
+                        )}
                     </div>
 
-                    {sanitizedDescription && (
-                        <div className="text-gray-700 leading-relaxed mb-6">
-                            {parse(sanitizedDescription)}
-                        </div>
-                    )}
+
                 </div>
             </div>
 
