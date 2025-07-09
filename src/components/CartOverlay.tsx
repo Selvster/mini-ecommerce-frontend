@@ -23,7 +23,7 @@ export default function CartOverlay() {
   const handlePlaceOrder = () => {
 
     if (cartItems.length === 0) {
-      console.warn('Cart is empty. Cannot place order.');
+      showToastAlert('error', 'Empty Cart', 'Please add items to your cart before placing an order.');
       return;
     }
     const orderItems = cartItems.map(item => ({
@@ -140,7 +140,14 @@ export default function CartOverlay() {
                 handlePlaceOrder();
               }
             }
-            className="cursor-pointer w-full bg-green-500 text-white py-3 rounded-md font-semibold hover:bg-green-600 transition-colors ">
+            className={`w-full text-white py-3 rounded-md font-semibold transition-colors
+              ${cartItems.length === 0
+                ? 'bg-gray-400 cursor-not-allowed'
+                : 'bg-green-500 hover:bg-green-600 cursor-pointer'
+              }`
+            }
+            disabled={cartItems.length === 0}
+          >
             PLACE ORDER
           </button>
         </div>
