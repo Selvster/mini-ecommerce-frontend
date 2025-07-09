@@ -77,5 +77,10 @@ export const useCartStore = create<CartState>((set, get) => ({
     return total.toFixed(2);
   },
 
-  reset : () => set(() => ({ cartItems: [], isCartOpen: false}))
+  reset : () => {
+    set(() => ({ cartItems: [], isCartOpen: false}))
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('cartItems');
+    }
+  }
 }));
