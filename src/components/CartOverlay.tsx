@@ -78,7 +78,7 @@ export default function CartOverlay() {
                             <span
                               key={textItem.id}
                               data-testid={`cart-item-attribute-${toKebabCase(attr.name)}-${toKebabCase(textItem.value)}${item.selectedAttributes[attr.name] === textItem.value ? '-selected' : ''}`}
-                              className={`w-auto p-2 h-8 flex items-center justify-center text-xs font-medium border border-gray-300 rounded-md
+                              className={`w-auto p-2 h-8 flex items-center justify-center text-xs font-medium border border-gray-300 
               ${item.selectedAttributes[attr.name] === textItem.value ? 'bg-dark text-white' : 'bg-white'}`
                               }
                             >
@@ -93,8 +93,8 @@ export default function CartOverlay() {
                           {attr.items.map((swatchItem) => (
                             <span
                               key={swatchItem.id}
-                              className={`w-6 h-6 rounded-full border border-gray-300
-              ${item.selectedAttributes[attr.name] === swatchItem.value ? 'ring-2 ring-primary ring-offset-1' : ''}`
+                              className={`w-6 h-6  border border-gray-300
+              ${item.selectedAttributes[attr.name] === swatchItem.value ? 'ring-1 ring-primary ring-offset-1' : ''}`
                               }
                               style={{ backgroundColor: swatchItem.value }}
                             ></span>

@@ -91,8 +91,8 @@ export default function ProductPage() {
                                                 <button
                                                     key={item.id}
                                                     onClick={() => handleAttributeSelect(attribute.name, item.value)}
-                                                    className={`w-8 h-8 rounded-full border border-gray-300 cursor-pointer
-                ${isSelected ? 'ring-2 ring-primary ring-offset-2' : ''}`}
+                                                    className={`w-8 h-8 border border-gray-300 cursor-pointer
+                ${isSelected ? 'ring-1 ring-primary ring-offset-2' : ''}`}
                                                     style={{ backgroundColor: item.value }}
                                                     title={item.displayValue}
                                                 ></button>
@@ -102,7 +102,7 @@ export default function ProductPage() {
                                                 <button
                                                     key={item.id}
                                                     onClick={() => handleAttributeSelect(attribute.name, item.value)}
-                                                    className={`px-4 py-2 text-sm font-medium border rounded-md cursor-pointer
+                                                    className={`px-4 py-2 text-sm font-medium border cursor-pointer
                 ${isSelected ? 'bg-dark text-white' : 'bg-white text-gray-700 hover:bg-gray-100'}`}
                                                 >
                                                     {item.value}
