@@ -4,16 +4,12 @@ import type { HeaderProps } from '../types';
 import { useCategories } from '../hooks/useGraphQl';
 import { Link } from 'react-router-dom';
 import { useCartStore } from '../stores/cartStore';
-import LoadingIndicator from './LoadingIndicator';
 export default function Header({ categoryName }: HeaderProps) {
     const toggleCart = useCartStore((state) => state.toggleCart);
     const cartItemCount = useCartStore((state) => state.cartItems.length);
 
     const { data: categoriesData, isLoading, isError, error } = useCategories();
 
-    // if (isLoading) {
-    //     return <div className="text-center py-4 text-xl ">Loading categories...</div>;
-    // }
 
     if (isError) {
         return <div className="text-center py-4 text-xl text-red-500 ">Error: {error?.message || 'Failed to load categories.'}</div>;
@@ -24,7 +20,7 @@ export default function Header({ categoryName }: HeaderProps) {
             <nav className="flex gap-8 text-base font-semibold">
                 {
                     isLoading && (
-                        <LoadingIndicator msg="Loading categories..." />
+                        <div className="text-gray-500">Loading categories...</div>
                     )
                 }
                 {categories.map((category) => (
