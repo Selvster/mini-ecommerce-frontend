@@ -3,6 +3,8 @@ import ProductCard from './ProductCard';
 import type { ProductGridProps } from '../types';
 import { useProducts } from '../hooks/useGraphQl';
 import { useCartStore } from '../stores/cartStore';
+import LoadingIndicator from './LoadingIndicator';
+import Error from './Error';
 
 export default function ProductGrid({ currentCategory }: ProductGridProps) {
   const isCartOpen = useCartStore((state) => state.isCartOpen);
@@ -12,13 +14,13 @@ export default function ProductGrid({ currentCategory }: ProductGridProps) {
 
   if (isLoading || isFetching) {
     return (
-      <div className="text-center py-8 text-xl ">Loading products...</div>
+      <LoadingIndicator msg={`Loading products...`}/>
     );
   }
 
   if (isError) {
     return (
-      <div className="text-center py-8 text-xl text-red-500 ">Error: {error?.message || 'Failed to load products.'}</div>
+      <Error message={error?.message || 'Failed to load products.'} />
     );
   }
 
@@ -26,6 +28,13 @@ export default function ProductGrid({ currentCategory }: ProductGridProps) {
     <div className="p-6 relative">
       <h2 className="text-4xl font-semibold mb-6 ">{currentCategory.toUpperCase()}</h2>
       <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
+        {
+          products.length === 0 && (
+            <div className="col-span-3 text-center text-gray-500">
+              No products found in this category.
+            </div>
+          )
+        }
         {products.map((product) => (
           <ProductCard key={product.id} product={product} />
         ))}

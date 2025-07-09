@@ -21,7 +21,7 @@ const ProductCard = ({ product } : ProductCardProps) => {
         <img
           src={product.gallery[0].imageUrl}
           alt={product.name}
-          className='w-full h-auto max-h-[350px] object-contain rounded-md'
+          className='w-full h-auto min-h-[300px] max-h-[350px] object-contain rounded-md'
         />
 
         {!product.inStock && (

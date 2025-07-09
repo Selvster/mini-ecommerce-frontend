@@ -5,6 +5,8 @@ import { useProduct } from '../hooks/useGraphQl';
 import { useCartStore } from '../stores/cartStore';
 import DOMPurify from 'dompurify';
 import parse from 'html-react-parser';
+import LoadingIndicator from '../components/LoadingIndicator';
+import Error from '../components/Error';
 
 
 export default function ProductPage() {
@@ -49,13 +51,17 @@ export default function ProductPage() {
 
     if (isLoading) {
         return (
-            <div className="text-center py-8 text-xl">Loading product...</div>
+            <LoadingIndicator msg="Loading product details..." />
         );
     }
 
     if (isError || !product) {
         return (
-            <div className="text-center py-8 text-xl text-red-500">Error: {error?.message || 'Failed to load product.'}</div>
+            <>
+                <Error 
+                    message={error?.message || 'Failed to load product details.'}
+                />
+            </>
         );
     }
     return (
