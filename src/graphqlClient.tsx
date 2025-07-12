@@ -1,6 +1,5 @@
 import axios from 'axios';
 
-const GRAPHQL_ENDPOINT = 'http://ecommerce-app.local/graphql'; 
 
 interface GraphQLResponse<T> {
   data?: T;
@@ -19,7 +18,7 @@ export async function rawGraphqlRequest<T>(
 ): Promise<T> {
   try {
     const response = await axios.post<GraphQLResponse<T>>(
-      GRAPHQL_ENDPOINT,
+      import.meta.env.VITE_GRAPHQL_ENDPOINT,
       {
         query,
         variables,
