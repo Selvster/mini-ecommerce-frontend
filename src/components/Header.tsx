@@ -33,7 +33,7 @@ export default function Header({ categoryName, setDefaultCategory }: HeaderProps
                     )
                 }
                 {categories.map((category) => (
-                    <Link to={`/category/${category.name}`}
+                    <Link to={`/${category.name}`}
                         key={category.name}
                         className={"text-gray-700 hover:text-primary-hover pb-2 " + (categoryName === category.name ? " text-primary border-b-2 border-primary" : "")}
                         data-testid={(categoryName === category.name) ? 'active-category-link' :'category-link'}

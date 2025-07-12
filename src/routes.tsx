@@ -8,7 +8,7 @@ export default function AppRoutes() {
     return (
         <Routes>
             <Route path="/" element={<AllProducts />} />
-            <Route path="/category/:categoryName" element={<AllProducts />} />
+            <Route path="/:categoryName" element={<AllProducts />} />
             <Route path="/product/:productId" element={<Product />} />
             <Route path="*" element={<NotFound />} />
         </Routes>
