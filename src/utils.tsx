@@ -19,3 +19,7 @@ export const showToastAlert = (
     timerProgressBar: true
   });
 };
+
+export const toKebabCase = (str: string) => {
+  return str.toLowerCase().replace(/\s+/g, '-');
+}

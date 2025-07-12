@@ -1,7 +1,7 @@
 
 import { useCartStore } from '../stores/cartStore';
 import { usePlaceOrder } from '../hooks/useGraphQl';
-import { showToastAlert } from '../utils';
+import { showToastAlert, toKebabCase } from '../utils';
 export default function CartOverlay() {
   const isOpen = useCartStore((state) => state.isCartOpen);
   const toggleCart = useCartStore((state) => state.toggleCart);
@@ -35,14 +35,11 @@ export default function CartOverlay() {
     placeOrder({ items: orderItems });
   };
 
-  const toKebabCase = (str: string) => {
-    return str.toLowerCase().replace(/\s+/g, '-');
-  };
-
   return (
     <div
       className={` top-1  h-auto w-100 bg-white shadow-lg z-50 transform transition-transform duration-300 ease-in-out ${isOpen ? 'translate-x-0 right-5 absolute' : 'translate-x-full right-0 hidden'
         }`}
+      data-testid="cart-overlay"
     >
       <div className="p-6">
         <div className="flex justify-between items-center mb-6">
@@ -97,6 +94,7 @@ export default function CartOverlay() {
               ${item.selectedAttributes[attr.name] === swatchItem.value ? 'ring-1 ring-primary ring-offset-1' : ''}`
                               }
                               style={{ backgroundColor: swatchItem.value }}
+                              data-testid={`cart-item-attribute-${toKebabCase(attr.name)}-${toKebabCase(swatchItem.value)}${item.selectedAttributes[attr.name] === swatchItem.value ? '-selected' : ''}`}
                             ></span>
                           ))}
                         </div>

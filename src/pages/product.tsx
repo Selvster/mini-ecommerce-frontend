@@ -7,7 +7,7 @@ import DOMPurify from 'dompurify';
 import parse from 'html-react-parser';
 import LoadingIndicator from '../components/LoadingIndicator';
 import Error from '../components/Error';
-import { showToastAlert } from '../utils';
+import { showToastAlert, toKebabCase } from '../utils';
 
 
 export default function ProductPage() {
@@ -36,6 +36,8 @@ export default function ProductPage() {
         addToCart(product, selectedAttributes);
         showToastAlert('success', 'Done !', 'Product added to cart successfully!');
     };
+
+
 
 
     if (isLoading) {
@@ -82,6 +84,7 @@ export default function ProductPage() {
                 ${isSelected ? 'ring-1 ring-primary ring-offset-2' : ''}`}
                                                     style={{ backgroundColor: item.value }}
                                                     title={item.displayValue}
+                                                    data-testid={`product-attribute-${toKebabCase(attribute.name)}-${toKebabCase(item.value)}${isSelected ? '-selected' : ''}`}
                                                 ></button>
                                             );
                                         } else {
@@ -91,6 +94,7 @@ export default function ProductPage() {
                                                     onClick={() => handleAttributeSelect(attribute.name, item.value)}
                                                     className={`px-4 py-2 text-sm font-medium border cursor-pointer
                 ${isSelected ? 'bg-dark text-white' : 'bg-white text-gray-700 hover:bg-gray-100'}`}
+                                                        data-testid={`product-attribute-${toKebabCase(attribute.name)}-${toKebabCase(item.value)}${isSelected ? '-selected' : ''}`}
                                                 >
                                                     {item.value}
                                                 </button>
