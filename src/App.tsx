@@ -8,7 +8,7 @@ import { useCartStore } from './stores/cartStore';
 
 export default function App() {
     const location = useLocation();
-    const match = matchPath('/category/:categoryName', location.pathname);
+    const match = matchPath('/:categoryName', location.pathname);
     const [defaultCategory, setDefaultCategory] = useState<string>('');
     const categoryName = match?.params?.categoryName || defaultCategory;
     const isCartOpen = useCartStore((state) => state.isCartOpen);
