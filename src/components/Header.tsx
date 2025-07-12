@@ -5,6 +5,7 @@ import { useCategories } from '../hooks/useGraphQl';
 import { Link } from 'react-router-dom';
 import { useCartStore } from '../stores/cartStore';
 import Error from './Error';
+import { useEffect } from 'react';
 export default function Header({ categoryName, setDefaultCategory }: HeaderProps) {
     const toggleCart = useCartStore((state) => state.toggleCart);
     const cartItemCount = useCartStore((state) => state.cartItems.length);
@@ -12,9 +13,12 @@ export default function Header({ categoryName, setDefaultCategory }: HeaderProps
     const { data: categoriesData, isLoading, isError, error } = useCategories();
     const categories = categoriesData?.categories || [];
 
-    if (categories.length > 0) {
-        setDefaultCategory(categories[0].name);
-    }
+
+    useEffect(() => {
+        if (categories.length > 0 && !categoryName) {
+            setDefaultCategory(categories[0].name);
+        }
+    }, [categories, setDefaultCategory]);
     return (
         <header className="flex items-center justify-between px-6 py-4 bg-white ">
             <nav className="flex gap-8 text-base font-semibold">
