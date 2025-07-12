@@ -29,12 +29,13 @@ export default function ProductPage() {
     const handleAttributeSelect = (attrName: string, value: string) => {
         setSelectedAttributes(prev => ({ ...prev, [attrName]: value }));
     };
-
+    const toggleCart = useCartStore((state) => state.toggleCart);
     const addToCart = useCartStore((state) => state.addToCart);
     const handleAddToCart = () => {
         if (!product) return;
         addToCart(product, selectedAttributes);
         showToastAlert('success', 'Done !', 'Product added to cart successfully!');
+        toggleCart();
     };
 
 
@@ -94,7 +95,7 @@ export default function ProductPage() {
                                                     onClick={() => handleAttributeSelect(attribute.name, item.value)}
                                                     className={`px-4 py-2 text-sm font-medium border cursor-pointer
                 ${isSelected ? 'bg-dark text-white' : 'bg-white text-gray-700 hover:bg-gray-100'}`}
-                                                        data-testid={`product-attribute-${toKebabCase(attribute.name)}-${toKebabCase(item.value)}${isSelected ? '-selected' : ''}`}
+                                                    data-testid={`product-attribute-${toKebabCase(attribute.name)}-${item.value}${isSelected ? '-selected' : ''}`}
                                                 >
                                                     {item.value}
                                                 </button>

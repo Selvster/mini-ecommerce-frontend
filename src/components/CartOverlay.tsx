@@ -94,7 +94,7 @@ export default function CartOverlay() {
               ${item.selectedAttributes[attr.name] === swatchItem.value ? 'ring-1 ring-primary ring-offset-1' : ''}`
                               }
                               style={{ backgroundColor: swatchItem.value }}
-                              data-testid={`cart-item-attribute-${toKebabCase(attr.name)}-${toKebabCase(swatchItem.value)}${item.selectedAttributes[attr.name] === swatchItem.value ? '-selected' : ''}`}
+                              data-testid={`cart-item-attribute-${toKebabCase(attr.name)}-${swatchItem.value}${item.selectedAttributes[attr.name] === swatchItem.value ? '-selected' : ''}`}
                             ></span>
                           ))}
                         </div>
