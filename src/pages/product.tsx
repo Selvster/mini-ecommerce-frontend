@@ -84,7 +84,7 @@ export default function ProductPage() {
                 ${isSelected ? 'ring-1 ring-primary ring-offset-2' : ''}`}
                                                     style={{ backgroundColor: item.value }}
                                                     title={item.displayValue}
-                                                    data-testid={`product-attribute-${toKebabCase(attribute.name)}-${toKebabCase(item.value)}${isSelected ? '-selected' : ''}`}
+                                                    data-testid={`product-attribute-${toKebabCase(attribute.name)}-${item.value}${isSelected ? '-selected' : ''}`}
                                                 ></button>
                                             );
                                         } else {

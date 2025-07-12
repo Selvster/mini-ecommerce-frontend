@@ -74,7 +74,7 @@ export default function CartOverlay() {
                           {attr.items.map((textItem) => (
                             <span
                               key={textItem.id}
-                              data-testid={`cart-item-attribute-${toKebabCase(attr.name)}-${toKebabCase(textItem.value)}${item.selectedAttributes[attr.name] === textItem.value ? '-selected' : ''}`}
+                              data-testid={`cart-item-attribute-${toKebabCase(attr.name)}-${textItem.value}${item.selectedAttributes[attr.name] === textItem.value ? '-selected' : ''}`}
                               className={`w-auto p-2 h-8 flex items-center justify-center text-xs font-medium border border-gray-300 
               ${item.selectedAttributes[attr.name] === textItem.value ? 'bg-dark text-white' : 'bg-white'}`
                               }
